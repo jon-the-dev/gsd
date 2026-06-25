@@ -151,6 +151,14 @@ func resolveAgent(cmd *cobra.Command) (string, error) {
 }
 
 func gitPull() error {
+	out, err := exec.Command(
+		"git", "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}",
+	).Output()
+	if err != nil || len(out) == 0 {
+		ui.Warn("No upstream tracking branch — skipping pull")
+		return nil
+	}
+
 	ui.Info("Syncing repository...")
 	pullCmd := exec.Command("git", "pull")
 	pullCmd.Stdout = os.Stdout
