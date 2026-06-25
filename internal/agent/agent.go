@@ -22,49 +22,49 @@ func Validate(name string) (string, error) {
 	)
 }
 
-func Launch(name, prompt, worktree string, ci bool) error {
+func Launch(name, prompt, worktree string, yolo bool) error {
 	switch name {
 	case "claude":
-		return launchClaude(prompt, worktree, ci)
+		return launchClaude(prompt, worktree, yolo)
 	case "codex":
-		return launchCodex(prompt, worktree, ci)
+		return launchCodex(prompt, worktree, yolo)
 	case "kiro":
-		return launchKiro(prompt, worktree, ci)
+		return launchKiro(prompt, worktree, yolo)
 	default:
 		return fmt.Errorf("unsupported agent: %s", name)
 	}
 }
 
-func LaunchInDir(name, dir string, ci bool) error {
+func LaunchInDir(name, dir string, yolo bool) error {
 	switch name {
 	case "claude":
-		return launchClaudeInDir(dir, ci)
+		return launchClaudeInDir(dir, yolo)
 	case "codex":
-		return launchCodexInDir(dir, ci)
+		return launchCodexInDir(dir, yolo)
 	case "kiro":
-		return launchKiroInDir(dir, ci)
+		return launchKiroInDir(dir, yolo)
 	default:
 		return fmt.Errorf("unsupported agent: %s", name)
 	}
 }
 
-func launchClaude(prompt, worktree string, ci bool) error {
+func launchClaude(prompt, worktree string, yolo bool) error {
 	args := []string{"-w", worktree, prompt}
-	if ci {
+	if yolo {
 		args = append([]string{"--dangerously-skip-permissions"}, args...)
 	}
 	return run("claude", args, "")
 }
 
-func launchClaudeInDir(dir string, ci bool) error {
+func launchClaudeInDir(dir string, yolo bool) error {
 	args := []string{}
-	if ci {
+	if yolo {
 		args = append(args, "--dangerously-skip-permissions")
 	}
 	return run("claude", args, dir)
 }
 
-func launchCodex(prompt, worktree string, ci bool) error {
+func launchCodex(prompt, worktree string, yolo bool) error {
 	root := os.Getenv("GSD_CODEX_WORKTREE_ROOT")
 	if root == "" {
 		root = ".codex/worktrees"
@@ -72,21 +72,21 @@ func launchCodex(prompt, worktree string, ci bool) error {
 	dir := root + "/" + worktree
 
 	args := []string{prompt}
-	if ci {
+	if yolo {
 		args = append([]string{"--dangerously-bypass-approvals-and-sandbox"}, args...)
 	}
 	return run("codex", args, dir)
 }
 
-func launchCodexInDir(dir string, ci bool) error {
+func launchCodexInDir(dir string, yolo bool) error {
 	args := []string{}
-	if ci {
+	if yolo {
 		args = append(args, "--dangerously-bypass-approvals-and-sandbox")
 	}
 	return run("codex", args, dir)
 }
 
-func launchKiro(prompt, worktree string, ci bool) error {
+func launchKiro(prompt, worktree string, yolo bool) error {
 	root := os.Getenv("GSD_KIRO_WORKTREE_ROOT")
 	if root == "" {
 		root = ".kiro/worktrees"
@@ -94,15 +94,15 @@ func launchKiro(prompt, worktree string, ci bool) error {
 	dir := root + "/" + worktree
 
 	args := []string{"chat", prompt}
-	if ci {
+	if yolo {
 		args = append([]string{"-a"}, args...)
 	}
 	return run("kiro-cli", args, dir)
 }
 
-func launchKiroInDir(dir string, ci bool) error {
+func launchKiroInDir(dir string, yolo bool) error {
 	args := []string{"chat"}
-	if ci {
+	if yolo {
 		args = append([]string{"-a"}, args...)
 	}
 	return run("kiro-cli", args, dir)

@@ -72,7 +72,7 @@ func runGSD(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("git pull failed: %w", err)
 	}
 
-	return agent.Launch(selectedAgent, p, worktree, ciMode)
+	return agent.Launch(selectedAgent, p, worktree, skipPerms())
 }
 
 func runGoalMode(selectedAgent, repo string, count int, label string) error {
@@ -92,7 +92,7 @@ func runGoalMode(selectedAgent, repo string, count int, label string) error {
 		return fmt.Errorf("git pull failed: %w", err)
 	}
 
-	return agent.Launch(selectedAgent, p, worktree, ciMode)
+	return agent.Launch(selectedAgent, p, worktree, skipPerms())
 }
 
 func runAutoMode(selectedAgent, repo string, count int) error {
@@ -111,7 +111,11 @@ func runAutoMode(selectedAgent, repo string, count int) error {
 		return fmt.Errorf("git pull failed: %w", err)
 	}
 
-	return agent.Launch(selectedAgent, p, worktree, ciMode)
+	return agent.Launch(selectedAgent, p, worktree, skipPerms())
+}
+
+func skipPerms() bool {
+	return ciMode || yoloFlag
 }
 
 func parseCountArg(args []string) (int, bool) {

@@ -40,7 +40,7 @@ func runTerm(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	return agent.LaunchInDir(selectedAgent, wtPath, ciMode)
+	return agent.LaunchInDir(selectedAgent, wtPath, skipPerms())
 }
 
 func resolveTermAgent(cmd *cobra.Command) (string, error) {

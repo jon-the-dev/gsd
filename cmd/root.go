@@ -13,6 +13,7 @@ var (
 	agentFlag string
 	autoFlag  int
 	labelFlag string
+	yoloFlag  bool
 	ciMode    bool
 )
 
@@ -38,6 +39,7 @@ func init() {
 	rootCmd.Flags().BoolP("kiro", "", false, "Use Kiro agent")
 	rootCmd.Flags().IntVar(&autoFlag, "auto", 0, "Auto-select N issues by priority")
 	rootCmd.Flags().StringVar(&labelFlag, "label", "", "Target issues with this GitHub label")
+	rootCmd.Flags().BoolVar(&yoloFlag, "yolo", false, "Skip permission prompts (dangerous)")
 	rootCmd.AddCommand(termCmd)
 	rootCmd.AddCommand(versionCmd)
 }
