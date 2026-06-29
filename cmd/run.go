@@ -11,11 +11,17 @@ import (
 	gitutil "github.com/jon-the-dev/gsd/internal/git"
 	"github.com/jon-the-dev/gsd/internal/issue"
 	"github.com/jon-the-dev/gsd/internal/prompt"
+	"github.com/jon-the-dev/gsd/internal/setup"
 	"github.com/jon-the-dev/gsd/internal/ui"
 	"github.com/spf13/cobra"
 )
 
 func runGSD(cmd *cobra.Command, args []string) error {
+	if setupFlag {
+		ui.PrintBanner()
+		return setup.Run(os.Stdin, ciMode)
+	}
+
 	selectedAgent, err := resolveAgent(cmd)
 	if err != nil {
 		return err
