@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `CHANGELOG.md` to track notable changes across releases (#1).
+- `README.md` with overview, install, usage for all modes, `--setup`,
+  environment variables, project layout, and shields.io badges (#4).
+- `LICENSE` (GNU AGPL-3.0) (#4).
 
 ## [0.2.0]
 
