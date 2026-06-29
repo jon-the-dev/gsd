@@ -39,7 +39,20 @@ gsd 3 --label bug             # Next 3 issues with label
 # Other modes
 gsd --auto 5                  # Priority-sorted auto-select (P0-P7 rubric)
 gsd term feature/my-branch    # Launch agent in a worktree
+
+# Setup
+gsd --setup                   # Install the Claude agents/skills gsd's prompts depend on
 ```
+
+`--setup` writes the subagents and skills bundled with gsd into the Claude config
+dir (`$CLAUDE_CONFIG_DIR`, else `~/.claude`): the `frontend-developer`,
+`backend-developer`, `cloud-architect`, and `test-runner` agents plus the
+`implement` and `merge` skills. Missing files are written; existing ones prompt
+`overwrite? [y/N]` per item (auto-no under `GSD_CI`). `/goal` is built into
+claude/codex; `/next-issue` (jons-ai-toolkit) and `/code-audit` (gstack) are
+maintained elsewhere and only verified, with a warning if absent.
+
+Bundled definitions live in `internal/setup/assets/`.
 
 ## Environment Variables
 

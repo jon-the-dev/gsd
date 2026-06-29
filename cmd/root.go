@@ -14,6 +14,7 @@ var (
 	autoFlag  int
 	labelFlag string
 	yoloFlag  bool
+	setupFlag bool
 	ciMode    bool
 )
 
@@ -40,6 +41,7 @@ func init() {
 	rootCmd.Flags().IntVar(&autoFlag, "auto", 0, "Auto-select N issues by priority")
 	rootCmd.Flags().StringVar(&labelFlag, "label", "", "Target issues with this GitHub label")
 	rootCmd.Flags().BoolVar(&yoloFlag, "yolo", false, "Skip permission prompts (dangerous)")
+	rootCmd.Flags().BoolVar(&setupFlag, "setup", false, "Install & enable the Claude skills/agents gsd depends on, then exit")
 	rootCmd.AddCommand(termCmd)
 	rootCmd.AddCommand(versionCmd)
 }
